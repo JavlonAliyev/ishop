@@ -13,6 +13,6 @@ def i18n(cls):
         if not suffix.startswith("_") or suffix[1:] not in codes:
             continue
 
-        property_name = field.name[-3:]
+        property_name = field.name[:-3]
         setattr(cls, property_name, property(lambda self: getattr(self, f"{property_name}_{get_language()}")))
     return cls
