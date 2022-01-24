@@ -24,7 +24,8 @@ urlpatterns = [
     path('docs/', include_docs_urls(title="DOC", permission_classes=())),
     path('api/', include([
         path('', include('main.urls')),
-        path('account/', include('account.urls'))
+        path('account/', include('account.urls')),
+        path('cart/', include('cart.urls'))
 
     ]))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
