@@ -17,9 +17,13 @@ class Order(models.Model):
     total_price = models.BigIntegerField()
     order_at = models.DateTimeField(auto_now_add=True)
 
+    # @property
+    # def products(self):
+    #     return OrderProduct.objects.filter(order=self)
 
 class OrderProduct(models.Model):
     order = models.ForeignKey(Order, on_delete=models.RESTRICT)
     product = models.ForeignKey(Product, on_delete=models.RESTRICT)
+    price = models.BigIntegerField(default=0)
     quantity = models.IntegerField()
 
