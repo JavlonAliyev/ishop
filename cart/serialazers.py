@@ -3,7 +3,7 @@ from rest_framework.exceptions import ValidationError
 
 from common.serialazers import CountrySerializer, RegionSerializer, DistrictSerializer
 from main.models import Product
-from main.serialazers import ProductSerializer
+
 from .models import DeliveryAddress, Order, OrderProduct
 
 class DeliveryAddressListSerializer(serializers.ModelSerializer):
@@ -75,7 +75,7 @@ class OrderProductListSerializer(serializers.ModelSerializer):
         fields = ('product', 'quantity', 'price')
 
 
-class OrderProductListSerializer(serializers.ModelSerializer):
+class OrderListSerializer(serializers.ModelSerializer):
     delivery_address = DeliveryAddressListSerializer(read_only=True)
     orderproduct_set = OrderProductSerializer(many=True, read_only=True)
     class Meta:

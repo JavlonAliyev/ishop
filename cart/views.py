@@ -1,5 +1,8 @@
 from django.db import transaction
+from rest_framework.exceptions import ValidationError
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from cart.models import DeliveryAddress, Order
 from cart.serialazers import DeliveryAddressListSerializer, DeliveryAddressSerializer, OrderSerializer, \
@@ -47,3 +50,17 @@ class OrderListView(RetrieveUpdateDestroyAPIView):
 
     def filter_queryset(self, queryset):
         return queryset.filter(user=self.request.user)
+
+
+class OrderStatusView(APIView):
+    def post(self, request, pk, status):
+        if status not in set ([row[0] for row in Order.STATUS_LIST]):
+            raise ValidationError({
+                "status": "Status qiymati noto'g'ri"
+            })
+
+        Order.objects.filter(id=pk).update(status=status)
+
+        return Response({
+            "status": status
+        })
